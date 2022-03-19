@@ -1,0 +1,19 @@
+<table *ngIf="listChats.length > 0" class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Participants</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let chat of listChats">
+      <td>{{ chat._id }}</td>
+      <td>{{ chat.name }}</td>
+      <td>{{ parseMembers(chat) }}</td>
+    </tr>
+  </tbody>
+</table>
+<h5 style="text-align: center; margin-top: 10px" *ngIf="listChats.length == 0">
+  Empty array
+</h5>
