@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Toast, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
+import { Schema } from 'mongoose';
 import { Chat } from 'src/app/models/chat';
 import { User } from 'src/app/models/user';
 import { ChatService } from 'src/app/service/chat.service';
@@ -11,7 +13,10 @@ import { ChatService } from 'src/app/service/chat.service';
 export class ChatListComponent implements OnInit {
   listChats: Chat[] = [];
 
-  constructor(private _chatService: ChatService) {}
+  constructor(
+    private _chatService: ChatService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit(): void {
     this.getChats();
@@ -25,6 +30,12 @@ export class ChatListComponent implements OnInit {
       },
       (error) => console.log(error)
     );
+  }
+
+  deleteChat(chatId: Schema.Types.ObjectId) {
+    this._chatService.deleteChat(chatId).subscribe((data: any) => {
+      this.toastr.success(data.message, 'Deleted Chat');
+    });
   }
 
   parseMembers(chat: Chat): String {

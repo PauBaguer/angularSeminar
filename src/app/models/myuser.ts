@@ -20,6 +20,7 @@ export interface User extends Document {
   chats: Chat[];
   createdAt: Date;
   updatedAt: Date;
+  disabled: Boolean;
   //  categories: Category[];
   //  payments: Payment[];
 }

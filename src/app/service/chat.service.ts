@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Chat } from '../models/chat';
+import { Chat, NewChatBody } from '../models/chat';
+import { Schema } from 'mongoose';
 
 @Injectable({
   providedIn: 'root',
@@ -13,5 +14,13 @@ export class ChatService {
 
   getChats(): Observable<Chat[]> {
     return this.http.get<Chat[]>(this.url + '/');
+  }
+
+  newChat(chat: NewChatBody): Observable<Object> {
+    return this.http.post<Object>(this.url + '/', chat);
+  }
+
+  deleteChat(chatid: Schema.Types.ObjectId): Observable<Object> {
+    return this.http.delete<Object>(this.url + '/' + chatid);
   }
 }

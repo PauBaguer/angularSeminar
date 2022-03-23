@@ -4,23 +4,25 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class UserService {
-  url = 'http://localhost:3000/api';
+  url = 'http://localhost:3000';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url + '/users');
+    return this.http.get<User[]>(this.url + '/user');
   }
 
   deleteUser(name: string): Observable<string> {
-    return this.http.delete(this.url + '/users/' + name, {responseType: 'text'})
+    return this.http.delete(this.url + '/users/' + name, {
+      responseType: 'text',
+    });
   }
 
   addUser(user: User): Observable<string> {
-    return this.http.post(this.url + '/users', user, {responseType: 'text'}) ;
+    return this.http.post(this.url + '/users', user, { responseType: 'text' });
   }
 
   getUser(name: string): Observable<User> {
@@ -28,6 +30,8 @@ export class UserService {
   }
 
   editUser(name: string, user: User): Observable<string> {
-    return this.http.put(this.url + '/users/' + name, user, {responseType: 'text'});
+    return this.http.put(this.url + '/users/' + name, user, {
+      responseType: 'text',
+    });
   }
 }
