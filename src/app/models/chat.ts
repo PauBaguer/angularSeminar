@@ -1,10 +1,10 @@
-import { User } from './user';
+import { User } from './myuser';
 import { ChatMessage } from './chatMessage';
 import { Document, Schema } from 'mongoose';
 
 export interface Chat extends Document {
   name: String;
-  messages: ChatMessage[];
+  messages: Schema.Types.ObjectId;
   users: User[];
 }
 

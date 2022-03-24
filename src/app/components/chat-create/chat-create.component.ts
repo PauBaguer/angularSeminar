@@ -2,7 +2,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import { ToastrService } from 'ngx-toastr';
 
 import { Chat, NewChatBody } from 'src/app/models/chat';
@@ -18,7 +18,7 @@ import { MyuserService } from 'src/app/service/myuser.service';
 export class ChatCreateComponent implements OnInit {
   chatForm: FormGroup;
   title = 'Crear Chat';
-  name: string | null;
+  id: string | null;
   users: User[] = [];
   checkedUsers: User[] = [];
 
@@ -34,10 +34,12 @@ export class ChatCreateComponent implements OnInit {
       name: ['', Validators.required],
     });
 
-    this.name = this.aRouter.snapshot.paramMap.get('name');
+    this.id = this.aRouter.snapshot.paramMap.get('id');
+    console.log(this.id);
   }
 
   ngOnInit(): void {
+    this.editChat();
     this._userService.getUsers().subscribe(
       (userlist) => {
         console.log(userlist);
@@ -54,11 +56,12 @@ export class ChatCreateComponent implements OnInit {
   }
 
   addChat() {
-    //Add User
+    //Add Chat
     const chat: NewChatBody = {
       name: this.chatForm.get('name')?.value,
       userIds: this.checkedUsers.map<Schema.Types.ObjectId>((item) => item._id),
     };
+
     console.log(chat);
     this._chatService.newChat(chat).subscribe(
       (data) => {
@@ -90,5 +93,16 @@ export class ChatCreateComponent implements OnInit {
       if (index > -1) this.checkedUsers.splice(index, 1);
     }
     console.log(this.checkedUsers);
+  }
+  editChat() {
+    if (this.id !== null) {
+      this._chatService.getChat(this.id).subscribe((data) => {
+        this.title = `Edit ${data._id} Chat`;
+        this.chatForm.setValue({
+          name: data.name,
+        });
+        this.checkedUsers = data.users;
+      });
+    }
   }
 }

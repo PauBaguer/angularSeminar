@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'editar-user/:name', component: CrearUserComponent },
   { path: 'chat-list', component: ChatListComponent },
   { path: 'chat-create', component: ChatCreateComponent },
+  { path: 'edit-chat/:id', component: ChatCreateComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' }, // In case of a wrong URL, the code redirects to the main path
 ];
 

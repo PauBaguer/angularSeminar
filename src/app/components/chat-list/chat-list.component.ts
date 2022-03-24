@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Toast, ToastrComponentlessModule, ToastrService } from 'ngx-toastr';
 import { Schema } from 'mongoose';
 import { Chat } from 'src/app/models/chat';
-import { User } from 'src/app/models/user';
+import { User } from 'src/app/models/myuser';
 import { ChatService } from 'src/app/service/chat.service';
 
 @Component({
@@ -35,6 +35,7 @@ export class ChatListComponent implements OnInit {
   deleteChat(chatId: Schema.Types.ObjectId) {
     this._chatService.deleteChat(chatId).subscribe((data: any) => {
       this.toastr.success(data.message, 'Deleted Chat');
+      this.getChats();
     });
   }
 

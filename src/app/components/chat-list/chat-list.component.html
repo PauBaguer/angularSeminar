@@ -23,10 +23,6 @@
                 <td>{{ parseMembers(chat) }}</td>
                 <td>
                   <i
-                    [routerLink]="['/edit-user', chat._id]"
-                    class="fa-solid fa-pen-to-square text-primary"
-                  ></i>
-                  <i
                     (click)="deleteChat(chat._id)"
                     class="fa-solid fa-trash text-danger"
                   ></i>
